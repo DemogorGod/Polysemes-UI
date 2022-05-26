@@ -2,9 +2,22 @@
 </script>
 
 <template>
-  <h1 class="text-3xl font-bold underline">
-    Polysemes UI
-  </h1>
+  <div class="flex flex-col justify-center">
+    <div class="flex justify-center"> 
+      <!-- <img src="../public/Logo.svg" class="w-9">  -->
+      <h1 class="text-3xl font-bold text-primary-2 mt-2">
+        Polysemes UI
+      </h1>
+    </div>
+
+    <hr class="primary-2 w-[90%] mx-[5%]">
+
+  </div>
+  
+  <div class="py-[2.5%] px-[5%]">
+    <router-view></router-view>
+  </div>
+  
 </template>
 
 <style>
