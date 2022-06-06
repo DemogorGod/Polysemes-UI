@@ -23,8 +23,12 @@
 
     <div class="flex justify-center"> 
         <h1 class="text-3xl font-bold text-secondary-2 mt-2">
-            Components Available <router-link to="/view-component"> View Components</router-link>
+            Components Available 
         </h1>
+    </div>
+
+    <div>
+        <router-link to="/view-component/card"> Card</router-link>
     </div>
 </template>
 
