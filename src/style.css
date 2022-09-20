@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Red Hat Display';
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  text-align: center;
+  height: 100vh;
+  background: #f1f5f4;
+}
+
+@layer base {
+  button {
+    border-radius: 2px;
+    font-family: 'Red Hat Display';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.01em;
+  }
+}
+
+@layer components {
+  .button_primary {
+    padding: 6px 18px;
+    background: #283D3B;
+    color: #FFFFFF;
+  }
+  .button_primary:hover{
+    background: #197278;
+  }
+  .button_primary:focus{
+    background: #197278;
+    outline: 2px solid #283D3B;
+  }
+  .button_primary:disabled{
+    background: #83B6BA;
+  }
+}
+
+@layer utilities {
+  .nav-container {
+    @apply h-[50px] table w-full;
+  }
+  .body-container {
+    height: calc(100vh - 50px);
+    background: #fff;
+  }
+  .page-x-padding {
+    @apply px-[50px];
+  }
+  .nav-img-sizing {
+    @apply h-[28px];
+  }
+  .nav-tabs {
+    outline: none;
+    font-family: 'Red Hat Display';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 13px;
+    letter-spacing: -0.0025em;
+    color: #C2B6B6;
+  }
+}
