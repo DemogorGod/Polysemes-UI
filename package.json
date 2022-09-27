@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "firebase": "^9.10.0",
     "vue": "^3.2.37",
     "vue-material-design-icons": "^5.1.2",
     "vue-router": "^4.1.5"
