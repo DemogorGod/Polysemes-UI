@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import ChevronDownIcon from 'vue-material-design-icons/ChevronDown.vue'
 import useAuth from '../composables/auth';
 
-const { user, signIn, signOut} = useAuth()
+const { user, logOut} = useAuth()
 const dropdown = ref(false)
 
 
@@ -35,8 +35,8 @@ const dropdown = ref(false)
             
             <div class="flex justify-end w-2/3">
                 <router-link 
-                to="/gallery">
-                    <button class="button_primary" @click="signIn()">
+                to="/auth">
+                    <button class="button_primary">
                         Sign In
                     </button>
                 </router-link>
@@ -70,7 +70,7 @@ const dropdown = ref(false)
                     class="dropdown"
                     :style="dropdown? 'display: block' : ''"
                     >
-                        <button class="button_primary" @click="signOut()">
+                        <button class="button_primary" @click="logOut()">
                             Sign Out
                         </button>
                     </div>

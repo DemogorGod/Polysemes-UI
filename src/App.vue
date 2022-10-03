@@ -1,6 +1,8 @@
 <script setup>
 import NavBar from "./components/NavBar.vue";
 
+import router from "./composables/router";
+
 // Icon Example
 // import MenuIcon from 'vue-material-design-icons/Menu.vue';
 
@@ -8,7 +10,7 @@ import NavBar from "./components/NavBar.vue";
 
 <template>
   <div>
-    <div class="nav-container">
+    <div class="nav-container" v-if="router.currentRoute.value.fullPath != '/auth'">
       <NavBar />
     </div>
     <div class="body-container">

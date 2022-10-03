@@ -68,6 +68,17 @@
 }
 
 @layer components {
+  .input {
+    outline: none;
+    padding: 6px;
+    background: #F8F8F8;
+    border-radius: 2px;
+    color: #D6C8C8;
+    @apply text-span-three border;
+  }
+  .input:focus {
+    @apply border border-primary;
+  }
   .button_primary {
     padding: 6px 18px;
     background: #283D3B;
@@ -78,6 +89,21 @@
   }
   .button_primary:focus{
     background: #197278;
+    outline: 2px solid #283D3B;
+  }
+  .button_primary:disabled{
+    background: #83B6BA;
+  }
+  .button_outline {
+    padding: 6px 18px;
+    color: #283D3B;
+  }
+  .button_outline:hover{
+    color: #197278;
+    background: #fff;
+  }
+  .button_outline:focus{
+    color: #197278;
     outline: 2px solid #283D3B;
   }
   .button_primary:disabled{

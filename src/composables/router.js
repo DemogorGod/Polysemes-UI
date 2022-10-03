@@ -8,7 +8,8 @@ import viewComponent from '../pages/gallery/components/viewComponent.vue'
 
 import useAuth from "./auth"
 
-const { user } = useAuth()
+// const { user } = useAuth()
+
 const routes = [
 { 
     path: "/", 

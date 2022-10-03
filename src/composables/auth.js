@@ -1,34 +1,45 @@
 import { ref } from "vue"
+import { app } from "./firebase.js";
+import router from './router'
+
+import {
+  getAuth,
+  signOut,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  auth
+} from "firebase/auth";
 
 const user = ref(null)
 
-const demoUser = {
-    name: 'Steve',
-    email: 'stevannajeeb11@gmail.com',
-    savedThemes : [],
-    savedStyles: []
-}
-
 // need to connect this composable to firebase auth
 export default function useAuth() {
-    const signIn = () => {
-        // firebase sing in function here
-        // set user with either return value or getUser function from firebase
-        console.log('user before ', user)
-        user.value = demoUser
-        console.log('user after ', user)
+    const logIn = async () => {
+        try {
+            const auth =  getAuth(app)
+            const response = await signInWithEmailAndPassword(auth, 'stevannajeeb11@gmail.com', 'fabio911')
+            if(response){
+                user.value = response
+                router.push('/gallery')
+            }
+        } catch (error) {
+            console.log('Sign In Error () => ', error)
+        }
     }
 
-    const signOut = () => {
-        // firebase sing out function here
-        console.log('user before ', user)
-        user.value = null
-        console.log('user after ', user)
+    const logOut = async () => {
+        try {
+            const auth =  getAuth(app)
+            user.value = await signOut(auth)
+            router.push('/')
+        } catch (error) {
+            console.log('Sign Out Error () => ', error)
+        }
     }
 
     return{
         user,
-        signIn,
-        signOut
+        logIn,
+        logOut
     }
 }

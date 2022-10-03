@@ -1,21 +1,17 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyAsn4vZ9hOdoWiu6asSMJy41OiflKpDBro",
-  authDomain: "polysemes-6e7d1.firebaseapp.com",
-  projectId: "polysemes-6e7d1",
-  storageBucket: "polysemes-6e7d1.appspot.com",
-  messagingSenderId: "17853995064",
-  appId: "1:17853995064:web:abfdc5665b1615f7332ecd",
-  measurementId: "G-GVQ7KEHQJY"
+  apiKey: "AIzaSyA36Yv5zP107NTOwi7MNitJduBrFo7ZwjU",
+  authDomain: "polysemesui.firebaseapp.com",
+  projectId: "polysemesui",
+  storageBucket: "polysemesui.appspot.com",
+  messagingSenderId: "947164291599",
+  appId: "1:947164291599:web:d724a90d09d45d25ceb97a"
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+export const app = initializeApp(firebaseConfig);
