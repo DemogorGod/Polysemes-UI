@@ -6,6 +6,3 @@
         not found
     </div>
 </template>
-
-<style scoped>
-</style>

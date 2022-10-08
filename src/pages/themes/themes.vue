@@ -6,6 +6,3 @@
         themes
     </div>
 </template>
-
-<style scoped>
-</style>

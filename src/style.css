@@ -4,6 +4,8 @@
 
 :root {
   font-family: 'Red Hat Display';
+  font-family: 'Inter', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -70,7 +72,7 @@
 @layer components {
   .input {
     outline: none;
-    padding: 6px;
+    padding: 8px 6px;
     background: #F8F8F8;
     border-radius: 2px;
     color: #D6C8C8;
@@ -87,10 +89,10 @@
   .button_primary:hover{
     background: #197278;
   }
-  .button_primary:focus{
+  /* .button_primary:focus{
     background: #197278;
     outline: 2px solid #283D3B;
-  }
+  } */
   .button_primary:disabled{
     background: #83B6BA;
   }
@@ -102,10 +104,10 @@
     color: #197278;
     background: #fff;
   }
-  .button_outline:focus{
+  /* .button_outline:focus{
     color: #197278;
     outline: 2px solid #283D3B;
-  }
+  } */
   .button_primary:disabled{
     background: #83B6BA;
   }
@@ -226,5 +228,23 @@
     line-height: 13px;
     letter-spacing: -0.0025em;
     color: #C2B6B6;
+  }
+  .loading {
+    background: linear-gradient(50deg, #283D3B, #197278,
+     #C9C9C9, #F1F5F4, #EDDDD4, #EEB3AC, #C44536, #772E25);
+    animation: movingBackground 2s ease infinite;
+    background-size: 200%;
+  }
+
+  @keyframes movingBackground {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    0% {
+        background-position: 0% 50%;
+    }
   }
 }

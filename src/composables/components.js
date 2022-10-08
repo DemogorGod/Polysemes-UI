@@ -4,11 +4,27 @@ import card from '../components/gallery/card.vue'
 
 const components = shallowRef([
     {
-        category: 'Cards',
-        detail: 'Designed to be used in various ways, from containing content, creating panels, to image rendering.',
+        category: 'Alerts',
+        detail: 'Alert components are used to convey important information to userss through color, icons, and placement, ',
         components: [
             {
-                name: 'Card',
+                name: 'Info Alert',
+                'component': card
+            },
+            {
+                name: 'Success Alert',
+                'component': card
+            },
+            {
+                name: 'Warning Alert',
+                'component': card
+            },
+            {
+                name: 'Error Alert',
+                'component': card
+            },
+            {
+                name: 'Loading Alert',
                 'component': card
             },
         ]

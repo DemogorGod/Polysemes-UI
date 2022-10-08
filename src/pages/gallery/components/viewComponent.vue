@@ -27,41 +27,47 @@
                 Element customizations are enabled once you are signed in
             </span>
         </div>
-        <div class="card p-[50px] table w-full h-fit mb-[20px]">
-            <div class="table-cell align-middle">
-                <div class="mx-auto my-auto w-max">
-                    <component 
-                    :is="routes[router.currentRoute.value.path.split('/')[3].toLowerCase()]"
-                    />
+        
+        <div class="flex border">
+            <div class=" w-full mr-[20px]">
+                <div class="card p-[50px] table w-full h-fit mb-[20px]">
+                    <div class="table-cell align-middle">
+                        <div class="mx-auto my-auto w-max">
+                            <component 
+                            :is="routes[router.currentRoute.value.path.split('/')[3].toLowerCase()]"
+                            />
+                        </div>
+                    </div>
                 </div>
+                <div class="card page-x-padding py-[25px]">
+                    <div class="flex justify-end text-span-two">
+                        <contentCopyIcon class="text-secondary/[.5] hover:text-primary cursor-pointer"/>
+                    </div>
+                    <code class="html">
+                        <span class="html-tag">
+                            &lt;
+                            <span class="html-name"> div </span>
+                            <span class="html-attr">class</span> = 
+                            <span class="html-string">"container"</span>
+                            >
+                            <span class="block pl-[25px]">
+                                card here
+                            </span>
+                            &lt;/
+                            <span class="html-name"> div </span>
+                            >
+                            <span class="block html-comment">
+                                {{ comment }}
+                            </span>
+                        </span>
+                        
+                    </code>
+                </div> 
+            </div>
+            <div class="border w-[300px]">
+                filters
             </div>
         </div>
-        <div class="card page-x-padding py-[25px]">
-            <div class="flex justify-end text-span-two">
-                <contentCopyIcon class="text-secondary/[.5] hover:text-primary cursor-pointer"/>
-            </div>
-            <code class="html">
-                <span class="html-tag">
-                    &lt;
-                    <span class="html-name"> div </span>
-                    <span class="html-attr">class</span> = 
-                    <span class="html-string">"container"</span>
-                    >
-                    <span class="block pl-[25px]">
-                        card here
-                    </span>
-                    &lt;/
-                    <span class="html-name"> div </span>
-                    >
-                    <span class="block html-comment">
-                        {{ comment }}
-                    </span>
-                </span>
-                
-            </code>
-        </div>
+        
     </div>
 </template>
-
-<style scoped>
-</style>

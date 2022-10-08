@@ -6,6 +6,3 @@
         card here
     </div>
 </template>
-
-<style scoped>
-</style>

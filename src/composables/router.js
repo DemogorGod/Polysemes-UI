@@ -5,10 +5,8 @@ import themes from '../pages/themes/themes.vue'
 import gallery from '../pages/gallery/gallery.vue'
 import notFound from '../pages/not-found/notFound.vue'
 import viewComponent from '../pages/gallery/components/viewComponent.vue'
-
-import useAuth from "./auth"
-
-// const { user } = useAuth()
+import SignIn from '../pages/auth/components/SignIn.vue'
+import SignUp from '../pages/auth/components/SignUp.vue'
 
 const routes = [
 { 
@@ -21,6 +19,18 @@ const routes = [
     path: "/auth", 
     name: auth, 
     component: auth, 
+    children: [
+        {
+        path: 'sign-in',
+        component: SignIn,
+        // meta: { requiresAuth: false }
+        },
+        {
+        path: 'sign-up',
+        component: SignUp,
+        // meta: { requiresAuth: false }
+        },
+    ]
     // meta: { requiresAuth: false } 
 },
 { 
