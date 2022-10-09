@@ -31,7 +31,7 @@ export default function useAuth() {
                 if(response.user.email === doc.data().email){
                     user.value = doc.data()
                     console.log('user signed in')
-                    router.push('/user-components')
+                    router.push('/gallery')
                 }
             });
             return (false)

@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import ChevronDownIcon from 'vue-material-design-icons/ChevronDown.vue'
+import MenuDown from 'vue-material-design-icons/MenuDown.vue'
 import useAuth from '../composables/auth';
 
 const { user, logOut, loadingAuth } = useAuth()
@@ -65,12 +65,12 @@ const dropdown = ref(false)
                 <div class="flex justify-end w-2/3">
                     <div class="dropdown-container">
                         <div 
-                        class="flex right-[50px] bg-brown py-[3px] px-[12px] text-primary cursor-pointer hover:bg-brown/[0.75]"
+                        class="flex right-[50px] bg-brown py-[6px] px-[12px] align-middle text-primary2 cursor-pointer hover:bg-brown/[0.75]"
                         @click="dropdown = true"
                         >
-                            <img src="../../public/avatar.svg" alt="" class=""> 
-                            <span class="mx-[10px] font-black">{{user.firstName}}</span>
-                            <ChevronDownIcon class=""/>
+                            <img src="../../public/avatar.svg" alt="" class="my-auto"> 
+                            <span class="mx-[10px] my-auto text-span-three">{{user.firstName}}</span>
+                            <MenuDown class="text-span-two my-auto"/>
                         </div>
                         <div 
                         class="dropdown"

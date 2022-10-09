@@ -1,6 +1,9 @@
 <script setup>
+    import { ref } from 'vue';
     import useComponents from '../../composables/components'
     import useAuth from '../../composables/auth'
+    import ChevronDownIcon from 'vue-material-design-icons/ChevronDown.vue'
+    import Magnify from 'vue-material-design-icons/Magnify.vue'
 
     // gallery components
     import card from '../../components/gallery/card.vue'
@@ -9,22 +12,51 @@
         components,
         selectedComponent
     } = useComponents()
-    
 
     const { user } = useAuth()
+    const themeDropdown = ref(false)
+    const componentDropdown = ref(false)
 
 </script>
 
 <template>
-    <div v-if="user" class="text-left page-x-padding pt-[50px] flex">
-        <div class="mr-[25px]">
-            select theme
+    <div v-if="user" class="flex page-x-padding">
+        <div @mouseleave="themeDropdown = false" class=" pt-[50px] pb-[25px] mr-[25px]">
+            <div class="dropdown-container" >
+                <div 
+                class="flex bg-white rounded-[2px] px-[6px] py-[8px] text-span-three  cursor-pointer hover:bg-brown/[0.75]"
+                @click="themeDropdown = !themeDropdown"
+                >
+                    <span class="mr-[80px] font-black text-[#767676]">Select Theme</span>
+                    <ChevronDownIcon class=""/>
+                </div>
+                <div 
+                class="dropdown w-[185px] card"
+                :style="themeDropdown? 'display: block' : ''"
+                >
+                    themes
+                </div>
+            </div>
         </div>
-        <div>
-            select component
+        <div @mouseleave="componentDropdown = false" class="pt-[50px] pb-[25px]">
+            <div class="dropdown-container" >
+                <div 
+                class="flex bg-white rounded-[2px] px-[6px] py-[8px] text-span-three  cursor-pointer hover:bg-brown/[0.75]"
+                @click="componentDropdown = !componentDropdown"
+                >
+                    <input type="text" placeholder="Search Component" class="text-[#767676] bg-transparent outline-none w-[200px] mr-[5px]">
+                    <Magnify class=""/>
+                </div>
+                <div 
+                class="dropdown w-[230px] card"
+                :style="componentDropdown? 'display: block' : ''"
+                >
+                    components
+                </div>
+            </div>
         </div>
     </div>
-    <div class="page-x-padding page-y-padding" v-if="$route.fullPath.split('/').length <= 2">
+    <div class="page-x-padding pb-[50px]" v-if="$route.fullPath.split('/').length <= 2">
         <div
         v-for="(item, i) in components" :key="i"
         class=" flex text-left justfiy-start flex-wrap">
