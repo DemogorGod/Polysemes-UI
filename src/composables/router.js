@@ -7,55 +7,73 @@ import notFound from '../pages/not-found/notFound.vue'
 import viewComponent from '../pages/gallery/components/viewComponent.vue'
 import SignIn from '../pages/auth/components/SignIn.vue'
 import SignUp from '../pages/auth/components/SignUp.vue'
+import user from '../pages/user/user.vue'
+
+import {
+    getAuth,
+    onAuthStateChanged
+} from "firebase/auth"
+
+import { app } from "./firebase.js"
+
+import { 
+    getDocs, 
+    query, 
+    getFirestore, 
+    collection,
+} from "firebase/firestore"
 
 const routes = [
 { 
     path: "/", 
     name: landing, 
     component: landing,
-    // meta: { requiresAuth: true }
+    meta: { authorize: [] }
 },
 { 
     path: "/auth", 
     name: auth, 
-    component: auth, 
+    component: auth,
     children: [
         {
         path: 'sign-in',
         component: SignIn,
-        // meta: { requiresAuth: false }
         },
         {
         path: 'sign-up',
         component: SignUp,
-        // meta: { requiresAuth: false }
         },
-    ]
-    // meta: { requiresAuth: false } 
+    ],
+    meta: { authorize: [] }
 },
 { 
     path: "/themes", 
     name: themes, 
-    component: themes, 
-    // meta: { requiresAuth: false }
+    component: themes,
+    meta: { authorize: [] }
 },
 { 
     path: "/gallery", 
     name: gallery, 
-    component: gallery, 
+    component: gallery,
     children: [
         {
         path: 'component/:id',
         component: viewComponent,
-        // meta: { requiresAuth: false }
         },
-    ]
+    ],
+    meta: { authorize: [] }
+},
+{ 
+    path: "/user", 
+    name: user, 
+    component: user, 
+    meta: { authorize: ['User'] }
 },
 { 
     path: "/:catchAll(.*)", 
     name: notFound, 
     component: notFound,
-    // meta: { requiresAuth: false }
 }
 ]
 
@@ -66,18 +84,43 @@ routes
 // shorthand routes:routes
 })
 
-// router.beforeResolve((to, from, next) => {
-    // replace this with firebase current auth user with catch function if no authenticated users
-    // Auth.currentAuthenticatedUser()
-    //   .then(() => {
-    //     next()
-    //   })
-    //   .catch(() => {
-    //     next({
-    //       path: '/auth'
-    //     })
-    //   })
-// })
+const hasUserRole = new Promise((resolve, reject) => {
+    const auth = getAuth(app)
+    onAuthStateChanged(auth, async (_user) => {
+        if(_user) {
+            const db = getFirestore(app)
+            const q = query(collection(db, 'users'))
+            const querySnapshot = await getDocs(q)
+            querySnapshot.forEach((doc) => {
+                if(_user.email === doc.data().email){
+                    resolve('user has role');
+                }
+            })
+        } else {
+            reject('user does not exist or does not have the role')
+        }
+    })
+})
+
+    
+
+
+router.beforeEach( (to, from, next) => {
+    const { authorize } = to.meta
+
+    if (authorize.length) {
+        hasUserRole
+        .then(() => {
+            console.log('resolved')
+            next()
+        })
+        .catch(() => {
+            router.push('/auth/sign-in')
+        })
+    }
+    
+    next(); 
+})
 
 
 export default router

@@ -81,27 +81,35 @@ export default function useAuth() {
             return true
         }
     }
+    const subscription =  () => {
+
+        const auth = getAuth(app);
+        sub.value = onAuthStateChanged(auth, async (_user) => {
+            loadingAuth.value = true
+            if(_user) {
+                const db = getFirestore(app)
+                const q = query(collection(db, 'users'))
+                const querySnapshot = await getDocs(q)
+                querySnapshot.forEach((doc) => {
+                    if(_user.email === doc.data().email){
+                        user.value = doc.data()
+                        console.log('user signed in found')
+                    }
+                });    
+            } else {
+                user.value = false
+            } 
+            loadingAuth.value = false
+        })
+    }
+
+    const getUser = () => {
+        return user
+    }
 
     onMounted( () => {
         if(!initialized.value){
-            const auth = getAuth(app);
-            sub.value = onAuthStateChanged(auth, async (_user) => {
-                loadingAuth.value = true
-                if(_user) {
-                    const db = getFirestore(app)
-                    const q = query(collection(db, 'users'))
-                    const querySnapshot = await getDocs(q)
-                    querySnapshot.forEach((doc) => {
-                        if(_user.email === doc.data().email){
-                            user.value = doc.data()
-                            console.log('user signed in found')
-                        }
-                    });    
-                } else {
-                    user.value = false
-                } 
-                loadingAuth.value = false
-            })
+            subscription ()
             initialized.value = true
         }
     })
@@ -112,6 +120,8 @@ export default function useAuth() {
         sub,
         logIn,
         logOut,
-        signUp
+        signUp,
+        subscription,
+        getUser
     }
 }
