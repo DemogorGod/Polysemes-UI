@@ -5,21 +5,22 @@
     import ChevronDownIcon from 'vue-material-design-icons/ChevronDown.vue'
     import Magnify from 'vue-material-design-icons/Magnify.vue'
 
-    // gallery components
-    import card from '../../components/gallery/card.vue'
 
     const {
         components,
         selectedComponent
     } = useComponents()
 
-    const { user } = useAuth()
+    const { user, loadingAuth } = useAuth()
     const themeDropdown = ref(false)
     const componentDropdown = ref(false)
 
 </script>
 
 <template>
+    <div v-if="loadingAuth" class="loading w-full h-full">
+        show me
+    </div>
     <div v-if="user" class="flex page-x-padding">
         <div @mouseleave="themeDropdown = false" class=" pt-[50px] pb-[25px] mr-[25px]">
             <div class="dropdown-container" >
@@ -38,7 +39,7 @@
                 </div>
             </div>
         </div>
-        <div @mouseleave="componentDropdown = false" class="pt-[50px] pb-[25px]">
+        <div @mouseleave="componentDropdown = false" class="pt-[50px]">
             <div class="dropdown-container" >
                 <div 
                 class="flex bg-white rounded-[2px] px-[6px] py-[8px] text-span-three  cursor-pointer hover:bg-brown/[0.75]"
@@ -56,7 +57,7 @@
             </div>
         </div>
     </div>
-    <div class="page-x-padding pb-[50px]" v-if="$route.fullPath.split('/').length <= 2">
+    <div class="page-x-padding pt-[50px]" v-if="$route.fullPath.split('/').length <= 2">
         <div
         v-for="(item, i) in components" :key="i"
         class=" flex text-left justfiy-start flex-wrap">

@@ -1,6 +1,6 @@
-import { ref, shallowRef, watch } from "vue"
+import { ref, shallowRef, watch, defineAsyncComponent } from "vue"
 
-import card from '../components/gallery/card.vue'
+const card = 'card'
 
 const components = shallowRef([
     {
@@ -8,25 +8,9 @@ const components = shallowRef([
         detail: 'Alert components are used to convey important information to userss through color, icons, and placement, ',
         components: [
             {
-                name: 'Info Alert',
-                'component': card
-            },
-            {
-                name: 'Success Alert',
-                'component': card
-            },
-            {
-                name: 'Warning Alert',
-                'component': card
-            },
-            {
-                name: 'Error Alert',
-                'component': card
-            },
-            {
-                name: 'Loading Alert',
-                'component': card
-            },
+                name: 'InfoAlert',
+                'component': defineAsyncComponent(() => import(`../components/gallery/InfoAlert.vue`))
+            }
         ]
     }
 ])

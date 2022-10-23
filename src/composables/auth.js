@@ -6,10 +6,13 @@ import {
   signOut,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  onAuthStateChanged
+  onAuthStateChanged,
+  sendPasswordResetEmail,
+  verifyPasswordResetCode,
+  updatePassword,
 } from "firebase/auth"
 
-import { getDocs, query, getFirestore, collection, setDoc, doc } from "firebase/firestore"
+import { getDocs, query, getFirestore, collection, setDoc, doc, getDoc } from "firebase/firestore"
 
 const initialized = ref(false)
 const user = ref(null)
@@ -56,25 +59,20 @@ export default function useAuth() {
         try {
             const auth = getAuth(app)
             const response = await createUserWithEmailAndPassword(auth, email, password)
-            if(response.user.email){
-                let ID = ''
-                let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-                for ( var i = 0; i < 20; i++ ) {
-                    ID += characters.charAt(Math.floor(Math.random() * 36));
-                }
-
-                const newUser = {
-                    ID: ID,
-                    firstName: 'Stevan',
-                    lastName: 'Najeeb',
-                    email: email,
-                    themes: [],
-                    plugins: []
-                }
-                const db = getFirestore(app)
-                const r = await setDoc(doc(db, "users", ID), newUser)
-                router.push('/auth/sign-in')
+            console.log(response.user.uid)
+            const newUser = {
+                ID: response.user.uid,
+                firstName: firstName,
+                lastName: lastName,
+                role: 'User',
+                email: response.user.email,
+                themes: [],
+                plugins: []
             }
+
+            const db = getFirestore(app)
+            const r = await setDoc(doc(db, "users", response.user.uid), newUser)
+            router.push('/auth/sign-in')
             return false
         } catch (error) {
             console.log('Sign Up Error () => ', error)
@@ -87,15 +85,11 @@ export default function useAuth() {
         sub.value = onAuthStateChanged(auth, async (_user) => {
             loadingAuth.value = true
             if(_user) {
+
                 const db = getFirestore(app)
-                const q = query(collection(db, 'users'))
-                const querySnapshot = await getDocs(q)
-                querySnapshot.forEach((doc) => {
-                    if(_user.email === doc.data().email){
-                        user.value = doc.data()
-                        console.log('user signed in found')
-                    }
-                });    
+                const docRef = doc(db, 'users', _user.uid)
+                const docSnap = await getDoc(docRef)
+                user.value = docSnap.data()
             } else {
                 user.value = false
             } 
@@ -105,6 +99,21 @@ export default function useAuth() {
 
     const getUser = () => {
         return user
+    }
+
+    const sendPasscodeResetEmail = async(email) => {
+        const actionCodeSettings = {
+            url: 'http://localhost:5173/',
+            handleCodeInApp: true
+        };
+        const auth =  getAuth(app)
+        await sendPasswordResetEmail(auth, email, actionCodeSettings)
+            .then(() => {
+                return true
+            })
+            .catch(() => {
+                return false
+            })
     }
 
     onMounted( () => {
@@ -122,6 +131,7 @@ export default function useAuth() {
         logOut,
         signUp,
         subscription,
-        getUser
+        getUser,
+        sendPasscodeResetEmail
     }
-}
+} 

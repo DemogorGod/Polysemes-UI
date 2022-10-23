@@ -73,12 +73,19 @@ const dropdown = ref(false)
                             <MenuDown class="text-span-two my-auto"/>
                         </div>
                         <div 
-                        class="dropdown"
+                        class="dropdown bg-red"
                         :style="dropdown? 'display: block' : ''"
                         >
-                            <button class="button_primary" @click="logOut()">
-                                Sign Out
-                            </button>
+                            <div class="w-[200px] py-[25px] bg-white border">
+                                <button class="button_primary mb-[25px]" @click="logOut()">
+                                    Sign Out
+                                </button>
+                                <router-link to="auth/reset-password">
+                                    <button class="button_primary">
+                                        Change Password
+                                    </button>
+                                </router-link>
+                            </div>
                         </div>
                     </div>
                 </div>

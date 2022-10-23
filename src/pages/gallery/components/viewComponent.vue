@@ -1,16 +1,15 @@
 <script setup>
-    import { ref, shallowRef } from 'vue';
+    import { ref, shallowRef, defineAsyncComponent} from 'vue';
     import router from '../../../composables/router';
     import contentCopyIcon from 'vue-material-design-icons/contentCopy.vue'
     import useAuth from '../../../composables/auth'
 
-    // gallery components
-    import card from '../../../components/gallery/card.vue'
-
     // possible routes
-    const routes = shallowRef({
-        'info%20alert': card
-    })
+    // const routes = shallowRef({
+    //     'infoalert': card
+    // })
+    const route = router.currentRoute.value.path.split('/')[3]
+    const selectedComponent = defineAsyncComponent(() => import(`../../../components/gallery/InfoAlert.vue`))
 
     const { user } = useAuth()
 
@@ -32,12 +31,12 @@
         </div>
         
         <div class="flex">
-            <div class="w-full" :style="user? 'margin-right: 25px;' : ''">
+            <div class="w-full mr-[25px]">
                 <div class="card p-[50px] table w-full h-fit mb-[20px]">
                     <div class="table-cell align-middle">
                         <div class="mx-auto my-auto w-max">
                             <component 
-                            :is="routes[router.currentRoute.value.path.split('/')[3].toLowerCase()]"
+                            :is="selectedComponent"
                             />
                         </div>
                     </div>
@@ -67,7 +66,7 @@
                     </code>
                 </div> 
             </div>
-            <div class="card w-[300px]" v-if="user">
+            <div class="card w-[300px]">
                 filters
             </div>
         </div>

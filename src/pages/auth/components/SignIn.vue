@@ -53,6 +53,10 @@
                     <CloseIcon />
                 </button>
             </div>
+
+            <div class="flex justify-end text-span-four text-primary2/[0.5] pb-[5px]">
+                <router-link to="/auth/reset-password" class="hover:text-primary"> Forgot Password?</router-link>
+            </div>
             <div class="input flex mb-[5px]">
                 <input 
                 :type="showPassword" 

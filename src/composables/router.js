@@ -7,6 +7,7 @@ import notFound from '../pages/not-found/notFound.vue'
 import viewComponent from '../pages/gallery/components/viewComponent.vue'
 import SignIn from '../pages/auth/components/SignIn.vue'
 import SignUp from '../pages/auth/components/SignUp.vue'
+import ResetPassword from '../pages/auth/components/ResetPassword.vue'
 import user from '../pages/user/user.vue'
 
 import {
@@ -21,6 +22,8 @@ import {
     query, 
     getFirestore, 
     collection,
+    doc,
+    getDoc,
 } from "firebase/firestore"
 
 const routes = [
@@ -42,6 +45,10 @@ const routes = [
         {
         path: 'sign-up',
         component: SignUp,
+        },
+        {
+        path: 'reset-password',
+        component: ResetPassword,
         },
     ],
     meta: { authorize: [] }
@@ -89,13 +96,11 @@ const hasUserRole = new Promise((resolve, reject) => {
     onAuthStateChanged(auth, async (_user) => {
         if(_user) {
             const db = getFirestore(app)
-            const q = query(collection(db, 'users'))
-            const querySnapshot = await getDocs(q)
-            querySnapshot.forEach((doc) => {
-                if(_user.email === doc.data().email){
-                    resolve('user has role');
-                }
-            })
+            const docRef = doc(db, 'users', _user.uid)
+            const docSnap = await getDoc(docRef)
+            if(docSnap.data().role === 'User'){
+                resolve('User role matches auth')
+            }
         } else {
             reject('user does not exist or does not have the role')
         }
@@ -111,7 +116,6 @@ router.beforeEach( (to, from, next) => {
     if (authorize.length) {
         hasUserRole
         .then(() => {
-            console.log('resolved')
             next()
         })
         .catch(() => {
