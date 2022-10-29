@@ -8,20 +8,23 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   sendPasswordResetEmail,
-  verifyPasswordResetCode,
-  updatePassword,
 } from "firebase/auth"
 
-import { getDocs, query, getFirestore, collection, setDoc, doc, getDoc } from "firebase/firestore"
+import { 
+    getDocs, 
+    query, 
+    getFirestore, 
+    collection, 
+    setDoc, 
+    doc, 
+    getDoc 
+} from "firebase/firestore"
 
-const initialized = ref(false)
+
+const initialize = ref(false)
 const user = ref(null)
-const loadingAuth = ref(true)
+const loadingAuth = ref(false)
 const sub = ref(null)
-
-import router from './router'
-
-// add check current authenticated user on mounted
 export default function useAuth() {
     const logIn = async (email, password) => {
         try {
@@ -34,7 +37,6 @@ export default function useAuth() {
                 if(response.user.email === doc.data().email){
                     user.value = doc.data()
                     console.log('user signed in')
-                    router.push('/gallery')
                 }
             });
             return (false)
@@ -49,7 +51,6 @@ export default function useAuth() {
             const auth =  getAuth(app)
             user.value = await signOut(auth)
             console.log('user signed out')
-            router.push('/')
         } catch (error) {
             console.log('Sign Out Error () => ', error)
         }
@@ -72,20 +73,18 @@ export default function useAuth() {
 
             const db = getFirestore(app)
             const r = await setDoc(doc(db, "users", response.user.uid), newUser)
-            router.push('/auth/sign-in')
             return false
         } catch (error) {
             console.log('Sign Up Error () => ', error)
             return true
         }
     }
-    const subscription =  () => {
-
+    const subscription = () => {
+        loadingAuth.value = true
         const auth = getAuth(app);
         sub.value = onAuthStateChanged(auth, async (_user) => {
-            loadingAuth.value = true
+            
             if(_user) {
-
                 const db = getFirestore(app)
                 const docRef = doc(db, 'users', _user.uid)
                 const docSnap = await getDoc(docRef)
@@ -93,12 +92,17 @@ export default function useAuth() {
             } else {
                 user.value = false
             } 
-            loadingAuth.value = false
         })
+
+        loadingAuth.value = false
     }
 
     const getUser = () => {
         return user
+    }
+
+    const toggleLoading = () => {
+        loadingAuth.value = !loadingAuth.value
     }
 
     const sendPasscodeResetEmail = async(email) => {
@@ -116,11 +120,10 @@ export default function useAuth() {
             })
     }
 
-    onMounted( () => {
-        if(!initialized.value){
-            subscription ()
-            initialized.value = true
-        }
+    onMounted( async () => {
+        loadingAuth.value = true
+        // await subscription()
+        // loadingAuth.value = false
     })
 
     return{
@@ -132,6 +135,7 @@ export default function useAuth() {
         signUp,
         subscription,
         getUser,
-        sendPasscodeResetEmail
+        sendPasscodeResetEmail,
+        toggleLoading
     }
 } 

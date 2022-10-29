@@ -1,20 +1,58 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onBeforeMount } from 'vue';
+import router from '@/composables/router';
 import MenuDown from 'vue-material-design-icons/MenuDown.vue'
-import useAuth from '../composables/auth';
+import useAuth from '@/composables/auth';
 
-const { user, logOut, loadingAuth } = useAuth()
+import { app } from "@/composables/firebase.js"
+
+import {
+  getAuth,
+  onAuthStateChanged,
+} from "firebase/auth"
+
+import { 
+    getFirestore, 
+    doc, 
+    getDoc 
+} from "firebase/firestore"
+
+const { logOut } = useAuth()
+
 const dropdown = ref(false)
 
+const submitSignOut = async () => {
+    await logOut()
+    router.push('/')
+}
 
+const user = ref(null)
+const loading = ref(true)
+
+onBeforeMount(() => {
+    setTimeout(() => {
+        const auth = getAuth(app);
+        onAuthStateChanged(auth, async (_user) => {  
+            if(_user) {
+                const db = getFirestore(app)
+                const docRef = doc(db, 'users', _user.uid)
+                const docSnap = await getDoc(docRef)
+                user.value = docSnap.data()
+            } else {
+                user.value = false
+            } 
+        })
+    }, 1000);
+    // loading.value = false
+})
 </script>
 
 <template>
-    <!-- Signed Out -->
-    <div v-if="loadingAuth " class="loading w-full h-full">
-    </div>
-    <div v-else class="nav-container">
-        <div class="bg-white page-x-padding h-full table-cell align-middle" v-if="!user">
+    <!-- <div v-if="loading" class="loading w-full h-full">
+    </div> -->
+    <div class="nav-container" :class="loading? 'loading': ''">
+        <!-- Signed Out -->
+        <div class="bg-white page-x-padding h-full table-cell align-middle" v-if="user === false">
             <div class="flex">
                 <div class="flex justify-start w-1/3">
                     <div class="mr-[64px]">
@@ -77,7 +115,7 @@ const dropdown = ref(false)
                         :style="dropdown? 'display: block' : ''"
                         >
                             <div class="w-[200px] py-[25px] bg-white border">
-                                <button class="button_primary mb-[25px]" @click="logOut()">
+                                <button class="button_primary mb-[25px]" @click="submitSignOut()">
                                     Sign Out
                                 </button>
                                 <router-link to="auth/reset-password">

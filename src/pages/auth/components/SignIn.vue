@@ -1,5 +1,8 @@
 <script setup>
     import { ref } from 'vue'
+
+    import router from '@/composables/router'
+
     import useAuth from '../../../composables/auth'
 
     import CloseIcon from 'vue-material-design-icons/Close.vue'
@@ -24,6 +27,7 @@
     const submitSignIn = async () => {
         loading.value = true
         logInResponse.value = await logIn(email.value, password.value)
+        router.push('/gallery')
         loading.value = false
     }
 </script>

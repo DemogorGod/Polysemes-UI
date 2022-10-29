@@ -224,6 +224,13 @@
     background-size: 200%;
   }
 
+  .loading-light{
+    background: linear-gradient(50deg, #283d3baf, #19727875,
+     #C9C9C9,  #c444368f, #772f2584);
+    animation: movingBackground 2s ease infinite;
+    background-size: 200%;
+  }
+
   @keyframes movingBackground {
     0% {
         background-position: 0% 50%;

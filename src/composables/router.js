@@ -1,29 +1,27 @@
 import { createWebHistory, createRouter } from "vue-router"
-import landing from '../pages/landing/landing.vue'
-import auth from '../pages/auth/auth.vue'
-import themes from '../pages/themes/themes.vue'
-import gallery from '../pages/gallery/gallery.vue'
-import notFound from '../pages/not-found/notFound.vue'
-import viewComponent from '../pages/gallery/components/viewComponent.vue'
-import SignIn from '../pages/auth/components/SignIn.vue'
-import SignUp from '../pages/auth/components/SignUp.vue'
-import ResetPassword from '../pages/auth/components/ResetPassword.vue'
-import user from '../pages/user/user.vue'
+import landing from '@/pages/landing/landing.vue'
+import auth from '@/pages/auth/auth.vue'
+import themes from '@/pages/themes/themes.vue'
+import gallery from '@/pages/gallery/gallery.vue'
+import notFound from '@/pages/not-found/notFound.vue'
+import viewComponent from '@/pages/component/viewComponent.vue'
+import SignIn from '@/pages/auth/components/SignIn.vue'
+import SignUp from '@/pages/auth/components/SignUp.vue'
+import ResetPassword from '@/pages/auth/components/ResetPassword.vue'
+// import user from '@/pages/user/user.vue'
 
-import {
-    getAuth,
-    onAuthStateChanged
-} from "firebase/auth"
 
 import { app } from "./firebase.js"
 
+import {
+  getAuth,
+  onAuthStateChanged,
+} from "firebase/auth"
+
 import { 
-    getDocs, 
-    query, 
     getFirestore, 
-    collection,
-    doc,
-    getDoc,
+    doc, 
+    getDoc 
 } from "firebase/firestore"
 
 const routes = [
@@ -63,33 +61,33 @@ const routes = [
     path: "/gallery", 
     name: gallery, 
     component: gallery,
-    children: [
-        {
-        path: 'component/:id',
-        component: viewComponent,
-        },
-    ],
+    meta: { authorize: [] }
+},
+{ 
+    path: "/component/:id", 
+    name: viewComponent, 
+    component: viewComponent,
     meta: { authorize: [] }
 },
 { 
     path: "/user", 
-    name: user, 
-    component: user, 
+    name: themes, 
+    component: themes, 
     meta: { authorize: ['User'] }
 },
 { 
     path: "/:catchAll(.*)", 
     name: notFound, 
     component: notFound,
+    meta: { authorize: [] }
 }
 ]
 
 
 const router = createRouter({
 history: createWebHistory(),
-routes
-// shorthand routes:routes
-})
+routes,
+})  
 
 const hasUserRole = new Promise((resolve, reject) => {
     const auth = getAuth(app)
@@ -107,12 +105,9 @@ const hasUserRole = new Promise((resolve, reject) => {
     })
 })
 
-    
-
 
 router.beforeEach( (to, from, next) => {
     const { authorize } = to.meta
-
     if (authorize.length) {
         hasUserRole
         .then(() => {
@@ -122,7 +117,6 @@ router.beforeEach( (to, from, next) => {
             router.push('/auth/sign-in')
         })
     }
-    
     next(); 
 })
 

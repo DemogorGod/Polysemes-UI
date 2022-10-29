@@ -40,6 +40,7 @@
     const submitSignUp = async () => {
         loading.value = true
         signUpResponse.value = await signUp(firstName.value, lastName.value, email.value, password.value)
+        router.push('/auth/sign-in')
         loading.value = false
     }
 </script>

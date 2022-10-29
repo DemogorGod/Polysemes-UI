@@ -1,47 +1,37 @@
 <script setup>
     import { ref, shallowRef, defineAsyncComponent} from 'vue';
-    import router from '../../../composables/router';
-    import contentCopyIcon from 'vue-material-design-icons/contentCopy.vue'
-    import useAuth from '../../../composables/auth'
+    import useComponents from '@/composables/components'
 
-    // possible routes
-    // const routes = shallowRef({
-    //     'infoalert': card
-    // })
-    const route = router.currentRoute.value.path.split('/')[3]
-    const selectedComponent = defineAsyncComponent(() => import(`../../../components/gallery/InfoAlert.vue`))
+    // import contentCopyIcon from 'vue-material-design-icons/contentCopy.vue'
 
-    const { user } = useAuth()
+    const {
+        selectedComponent
+    } = useComponents()
 
-    const comment = ref('<!-- Card Component-->')
+    // const comment = ref('<!-- Card Component-->')
 </script>
 
 <template>
-    <!-- No Filters here, needs to be signed in to view the portal with filters -->
-    <div class="page-x-padding mb-[50px] h-full text-left">
+    <div class="page-x-padding pt-[25px] text-left h-[85%]">
         <div class="mb-[10px]">
             <span 
             class="w-full text-left text-span-one text-[#D6C8C8]"
             >{{$route.params.id}}</span>
         </div>
-        <div class="mb-[30px]" v-if="!user">
-            <span class="w-full text-left text-span-three text-pink">
-                Element customizations are enabled once you are signed in
-            </span>
-        </div>
         
-        <div class="flex">
+        <div class="flex h-[calc(100% - 10px)] h-full">
             <div class="w-full mr-[25px]">
-                <div class="card p-[50px] table w-full h-fit mb-[20px]">
+                <div class="card p-[50px] table w-full h-full mb-[20px]">
                     <div class="table-cell align-middle">
                         <div class="mx-auto my-auto w-max">
                             <component 
-                            :is="selectedComponent"
+                            :filters="selectedComponent.filters"
+                            :is="selectedComponent.component"
                             />
                         </div>
                     </div>
                 </div>
-                <div class="card page-x-padding py-[25px]">
+                <!-- <div class="card page-x-padding py-[25px]">
                     <div class="flex justify-end text-span-two">
                         <contentCopyIcon class="text-secondary/[.5] hover:text-primary cursor-pointer"/>
                     </div>
@@ -64,12 +54,31 @@
                         </span>
                         
                     </code>
-                </div> 
+                </div>  -->
             </div>
-            <div class="card w-[300px]">
-                filters
+            <div class="card w-[300px] h-full p-[25px]">
+                <div class="flex justify-between">
+                    <span class="text-span-four text-secondary">
+                        Design
+                    </span>
+                    <!-- <div>
+                        <button>
+                            tailwind
+                        </button>
+                        <button>
+                            code
+                        </button>
+                    </div> -->
+                </div>
+                <hr class="mb-[20px] mt-[10px] h-[3px] bg-primary">
+                <component v-for="(c, i) in selectedComponent.filters"
+                :component="selectedComponent"
+                :value="c.value"
+                :is="c.component"
+                :type="c.name"
+                :title="c.title"
+                />
             </div>
         </div>
-        
     </div>
 </template>
