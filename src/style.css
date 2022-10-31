@@ -70,6 +70,20 @@
 }
 
 @layer components {
+  .form-selects {
+    outline: none;
+    background: #F8F8F8;
+    color: #D6C8C8;
+    @apply text-span-four pl-[5px];
+  }
+  .form-inputs {
+    outline: none;
+    padding: 2px 4px;
+    background: #F8F8F8;
+    border-radius: 2px;
+    color: #D6C8C8;
+    @apply text-span-four border;
+  }
   .input {
     outline: none;
     padding: 8px 6px;

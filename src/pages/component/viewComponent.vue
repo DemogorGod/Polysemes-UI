@@ -20,10 +20,10 @@
         </div>
         
         <div class="flex h-[calc(100% - 10px)] h-full">
-            <div class="w-full mr-[25px]">
+            <div class="w-full mr-[25px] overflow-auto">
                 <div class="card p-[50px] table w-full h-full mb-[20px]">
-                    <div class="table-cell align-middle">
-                        <div class="mx-auto my-auto w-max">
+                    <div class="table-cell align-middle ">
+                        <div class="mx-auto my-auto w-max ">
                             <component 
                             :filters="selectedComponent.filters"
                             :is="selectedComponent.component"
@@ -58,7 +58,7 @@
             </div>
             <div class="card w-[300px] h-full p-[25px]">
                 <div class="flex justify-between">
-                    <span class="text-span-four text-secondary">
+                    <span class="text-span-four text-secondary mb-[5px]">
                         Design
                     </span>
                     <!-- <div>
@@ -70,7 +70,7 @@
                         </button>
                     </div> -->
                 </div>
-                <hr class="mb-[20px] mt-[10px] h-[3px] bg-primary">
+                <hr class="h-[3px] bg-primary">
                 <component v-for="(c, i) in selectedComponent.filters"
                 :component="selectedComponent"
                 :value="c.value"

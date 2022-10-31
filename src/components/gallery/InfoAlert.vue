@@ -8,7 +8,6 @@ import InformationOutline from 'vue-material-design-icons/InformationOutline.vue
 
 const {
     defaultStyle,
-    // text,
     defaultContainerStyle
 } = useInfoAlert()
 
@@ -17,12 +16,8 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
-    // filters: {
-    //     type: Array,
-    // }
 })
 
-const text = ref('')
 
 
 const {
@@ -30,25 +25,54 @@ const {
 } = useComponents()
 
 
+const text = ref('')
+const hideIcon = ref(false)
+
+const filterComponent = () =>{
+    const textFilter = selectedComponent.value.filters.find(item => {
+        return item.name === 'text'
+    })
+    text.value = textFilter.value
+
+    const iconFilter = selectedComponent.value.filters.find(item => {
+        return item.name === 'icon'
+    })
+    hideIcon.value = iconFilter.value
+}
+
+
 onMounted(() =>{
-    // const t = props.filters.find(item => {
-    //     return item.name === 'text'
-    // })
-    // text.value = t.value
+    filterComponent()
 })
 
-watch(selectedComponent, (newValue, oldValue) => [
-    console.log('changed', newValue, oldValue)
-])
+watch(selectedComponent.value, (newValue, oldValue) =>{
+    filterComponent()
+})
 
 
 </script>
 
 <template>
     <div :style="defaultContainerStyle">
-        <div v-if="!demo" :style="defaultStyle">
-            <InformationOutline class="text-md"/> | 
-            {{selectedComponent.filters[0].value}}
+        <div 
+        v-if="!demo" 
+        :style="defaultStyle"
+        class="flex w-[200px] h-max overflow-x-auto"
+        >
+            <div 
+            v-show="!hideIcon" 
+            class="
+            border-r-2 
+            border-primary2 
+            pr-[10px] 
+            mr-[10px] 
+            grid place-content-center
+            pb-[5px]
+            "
+            >
+                <InformationOutline class="text-lg my-auto "/> 
+            </div> 
+            <div>{{text}}</div>
         </div>
         <div v-else :style="defaultStyle">
             <InformationOutline class="text-md"/> | Text...

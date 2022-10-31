@@ -18,10 +18,18 @@ const components = shallowRef([
                         title: 'Alert Text',
                         'component': defineAsyncComponent(() => import( '@/components/filters/TextInput.vue')),
                     },
-                    // {
-                    //     value: 'icon',
-                    //     'component': defineAsyncComponent(() => import( '@/components/filters/example.vue')),
-                    // }
+                    {
+                        value: false,
+                        name: 'icon',
+                        title: 'Hide Icon',
+                        'component': defineAsyncComponent(() => import( '@/components/filters/Toogle.vue')),
+                    },
+                    {
+                        value: 'auto#auto',
+                        name: 'measurement',
+                        title: 'Sizing',
+                        'component': defineAsyncComponent(() => import( '@/components/filters/Measurement.vue')),
+                    },
                 ]
             }
         ]
@@ -39,26 +47,11 @@ const selectedComponent = ref(
 export default function useComponents() {
 
     const updateComponent = ( name, type, value ) =>{
-        // Component Name, Component Filter, newValue
-        // console.log('reached', name, type, value)
-
         selectedComponent.value.filters.map(item => {
             if(item.name === type){
                 item.value = value
             }
         })
-
-        console.log(selectedComponent.value)
-
-        // console.log('update ' + props.type + ' to the new value of...' + newValue.value)
-
-        // const filter = props.component.filters.find(item => {
-        //     return item.name === props.type
-        // })
-        // filter.value = newValue.value
-
-        // console.log(filter)
-
     }
     onMounted( () => {
         const routes = router.currentRoute.value.fullPath.split('/')
