@@ -29,15 +29,17 @@ const text = ref('')
 const hideIcon = ref(false)
 
 const filterComponent = () =>{
-    const textFilter = selectedComponent.value.filters.find(item => {
-        return item.name === 'text'
-    })
-    text.value = textFilter.value
+    if(selectedComponent.value){
+        const textFilter = selectedComponent.value.filters.find(item => {
+            return item.name === 'text'
+        })
+        text.value = textFilter.value
 
-    const iconFilter = selectedComponent.value.filters.find(item => {
-        return item.name === 'icon'
-    })
-    hideIcon.value = iconFilter.value
+        const iconFilter = selectedComponent.value.filters.find(item => {
+            return item.name === 'icon'
+        })
+        hideIcon.value = iconFilter.value
+    }
 }
 
 

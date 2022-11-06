@@ -25,6 +25,7 @@
                     <div class="table-cell align-middle ">
                         <div class="mx-auto my-auto w-max ">
                             <component 
+                            v-if="selectedComponent"
                             :filters="selectedComponent.filters"
                             :is="selectedComponent.component"
                             />
@@ -56,7 +57,10 @@
                     </code>
                 </div>  -->
             </div>
-            <div class="card w-[300px] h-full p-[25px]">
+            <div 
+            v-if="selectedComponent"
+            class="card w-[300px] h-full p-[25px]" 
+            >
                 <div class="flex justify-between">
                     <span class="text-span-four text-secondary mb-[5px]">
                         Design

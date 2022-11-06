@@ -36,13 +36,7 @@ const components = shallowRef([
     }
 ])
 
-const selectedComponent = ref(
-    {
-        name: 'N/A',
-        'component': null, 
-        filters: []
-    }
-)
+const selectedComponent = ref(null)
 
 export default function useComponents() {
 

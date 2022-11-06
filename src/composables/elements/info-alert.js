@@ -23,12 +23,14 @@ const defaultContainerStyle  = ref({
 export default function useInfoAlert  () {
 
     const filterStyle = () =>{
-        const measurements = selectedComponent.value.filters.find(item => {
-            return item.name === 'measurement'
-        }).value.split('#')
-        // o => width 1 => height
-        defaultStyle.value['width'] = measurements[0]
-        defaultStyle.value['height'] = measurements[1]
+        if(selectedComponent.value) {
+            const measurements = selectedComponent.value.filters.find(item => {
+                return item.name === 'measurement'
+            }).value.split('#')
+            // o => width 1 => height
+            defaultStyle.value['width'] = measurements[0]
+            defaultStyle.value['height'] = measurements[1]
+        }
     }
     
     
@@ -36,7 +38,7 @@ export default function useInfoAlert  () {
         filterStyle()
     })
     
-    watch(selectedComponent.value, (newValue, oldValue) => {
+    watch(selectedComponent.value, () => {
         filterStyle()
     })
 
