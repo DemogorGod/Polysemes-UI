@@ -74,7 +74,6 @@ const filterInputs = () => {
             return item === widthUnit.value
         }) === undefined
     ) {
-        console.log(1)
         widthUnit.value = 'auto'
         widthVolume.value = ''
         disableWidth.value = true
@@ -85,12 +84,10 @@ const filterInputs = () => {
             widthUnit.value === 'min-content' ||
             widthUnit.value === 'max-content' 
         ) {
-            console.log(2)
             widthVolume.value = ''
             disableWidth.value = true
         } else {
             if(widthVolume.value.length === 0) {
-                console.log(3)
                 widthVolume.value = '100'
                 disableWidth.value = false
             }
@@ -102,7 +99,6 @@ const filterInputs = () => {
             return item === heightUnit.value
         }) === undefined
     ) {
-        console.log(1)
         heightUnit.value = 'auto'
         heightVolume.value = ''
         disableHeight.value = true
@@ -113,12 +109,10 @@ const filterInputs = () => {
             heightUnit.value === 'min-content' ||
             heightUnit.value === 'max-content' 
         ) {
-            console.log(2)
             heightVolume.value = ''
             disableHeight.value = true
         } else {
             if(heightVolume.value.length === 0) {
-                console.log(3)
                 heightVolume.value = '100'
                 disableHeight.value = false
             }

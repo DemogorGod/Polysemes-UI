@@ -30,6 +30,21 @@ const components = shallowRef([
                         title: 'Sizing',
                         'component': defineAsyncComponent(() => import( '@/components/filters/Measurement.vue')),
                     },
+                    {
+                        value: 'DEECED',
+                        name: 'backgroundcolor',
+                        title: 'Background Color',
+                        'component': defineAsyncComponent(() => import( '@/components/filters/BackgroundColor.vue')),
+                    },
+                    {
+                        value: {
+                            'border-radius': '2px 2px 2px 2px',
+                            'border': '0px #ffffff solid'
+                        },
+                        name: 'border',
+                        title: 'Border',
+                        'component': defineAsyncComponent(() => import( '@/components/filters/Border.vue')),
+                    },
                 ]
             }
         ]

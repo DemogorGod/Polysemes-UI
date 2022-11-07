@@ -20,8 +20,8 @@
         </div>
         
         <div class="flex h-[calc(100% - 10px)] h-full">
-            <div class="w-full mr-[25px] overflow-auto">
-                <div class="card p-[50px] table w-full h-full mb-[20px]">
+            <div class="w-full mr-[25px]">
+                <div class="card p-[50px] table w-full h-full mb-[20px] overflow-auto">
                     <div class="table-cell align-middle ">
                         <div class="mx-auto my-auto w-max ">
                             <component 
@@ -59,7 +59,7 @@
             </div>
             <div 
             v-if="selectedComponent"
-            class="card w-[300px] h-full p-[25px]" 
+            class="card w-[300px] h-full p-[25px] overflow-auto" 
             >
                 <div class="flex justify-between">
                     <span class="text-span-four text-secondary mb-[5px]">
