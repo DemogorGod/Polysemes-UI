@@ -45,6 +45,24 @@ const components = shallowRef([
                         title: 'Border',
                         'component': defineAsyncComponent(() => import( '@/components/filters/Border.vue')),
                     },
+                    {
+                        value: {
+                            'color': '#197278',
+                            'font-family': 'Red Hat Display',
+                            'font-style': 'normal',
+                            'font-weight': '500',
+                            'font-size': '16px',
+                            'line-height': '21px',
+                            'text-align': 'center',
+                            'letter-spacing': '0.0025em',
+                            'text-transform': '',
+                            'text-decoration-line': 'none',
+                            'align-items': 'center'
+                        },
+                        name: 'textStyling',
+                        title: 'Text',
+                        'component': defineAsyncComponent(() => import( '@/components/filters/Text.vue')),
+                    },
                 ]
             }
         ]
@@ -61,6 +79,7 @@ export default function useComponents() {
                 item.value = value
             }
         })
+        console.log('updated', value)
     }
     onMounted( () => {
         const routes = router.currentRoute.value.fullPath.split('/')

@@ -11,10 +11,20 @@ const defaultStyle  = ref({
     'border-radius': '2px 2px 2px 2px',
     'border': '',
     'padding': '6px',
-    'color': '#197278',
     'margin': 'auto',
     'width': 'auto',
-    'height': 'auto'
+    'height': 'auto',
+    'color': '#197278',
+    'font-family': 'Red Hat Display',
+    'font-style': 'normal',
+    'font-weight': '500',
+    'font-size': '16px',
+    'line-height': '21px',
+    'text-align': 'center',
+    'letter-spacing': '0.0025em',
+    'text-transform': '',
+    'text-decoration-line': '',
+    'align-items': 'center',
 })
 
 const defaultContainerStyle  = ref({
@@ -70,6 +80,21 @@ export default function useInfoAlert  () {
             })
             defaultStyle.value['border-radius'] = border.value['border-radius']
             defaultStyle.value['border'] = border.value.border
+
+            const text = selectedComponent.value.filters.find(item => {
+                return item.name === 'textStyling'
+            })
+            defaultStyle.value['color'] = text.value['color']
+            defaultStyle.value['font-family'] = text.value['font-family']
+            defaultStyle.value['font-style'] = text.value['font-style']
+            defaultStyle.value['font-weight'] = text.value['font-weight']
+            defaultStyle.value['font-size'] = text.value['font-size']
+            defaultStyle.value['line-height'] = text.value['line-height']
+            defaultStyle.value['text-align'] = text.value['text-align']
+            defaultStyle.value['letter-spacing'] = text.value['letter-spacing']
+            defaultStyle.value['text-transform'] = text.value['text-transform']
+            defaultStyle.value['text-decoration-line'] = text.value['text-decoration-line']
+            defaultStyle.value['align-items'] = text.value['align-items']
         }
     }
     

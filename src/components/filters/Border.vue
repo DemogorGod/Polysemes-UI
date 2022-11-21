@@ -122,9 +122,9 @@ watch([topLeft, topRight, bottomLeft, bottomRight, lockRadius], ()=> {
                 </select>
             </div>
         </div>
-        <div class="flex mb-[10px]">
-            <BorderRadius class="text-primary/[0.5] mr-[5px]"/>
+        <div class="flex justify-between mb-[10px] w-full">
             <div class="flex">
+                <BorderRadius class="text-primary/[0.5] mr-[5px]"/>
                 <div class="form-inputs mt-[5px] mr-[5px]">
                     <input 
                     name="text-input" 
@@ -158,14 +158,13 @@ watch([topLeft, topRight, bottomLeft, bottomRight, lockRadius], ()=> {
                     >
                 </div>
             </div>
-            
             <LockOpenOutline 
-            class="ml-[5px] text-primary/[0.5] cursor-pointer hover:text-primary/[0.25]" 
+            class="mr-[5px] text-primary/[0.5] cursor-pointer hover:text-primary/[0.25]" 
             v-if="!lockRadius"
             @click="lockRadius = !lockRadius"
             />
             <LockOutline 
-            class="ml-[5px] text-primary cursor-pointer  hover:text-primary/[0.25]" 
+            class="mr-[5px] text-primary cursor-pointer  hover:text-primary/[0.25]" 
             v-else
             @click="lockRadius = !lockRadius"
             />
