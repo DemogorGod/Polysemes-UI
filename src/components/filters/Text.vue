@@ -33,21 +33,40 @@ const {
     updateComponent
 } = useComponents()
 
+const convertWeightToWords = (s) => {
+    if(s === '100'){ return 'Thin' }
+    if(s === '200'){ return 'Extralight' }
+    if(s === '300'){ return 'Light' }
+    if(s === '400'){ return 'Regular' }
+    if(s === '500'){ return 'Medium' }
+    if(s === '600'){ return 'Semibold' }
+    if(s === '700'){ return 'Bold' }
+    if(s === '800'){ return 'Extrabold' }
+    if(s === '900'){ return 'Black' }
+
+}
+
 const fontFamily = ref(props.value['font-family'])
-const fontStyle = ref('Regular')
+const fontStyle = ref(convertWeightToWords(props.value['font-weight']) + (props.value['font-style'] === 'italic'? ' Italic' : ''))
 
 const fontStyleOptions = ref([
-    'Regular',
+    'Thin',
+    'Extralight',
+    'Light',
+    'Regular', 
     'Medium',
     'Semibold',
     'Bold',
-    'Extra Bold',
+    'Extrabold',
     'Black',
+    'Thin Italic',
+    'Extralight Italic',
+    'Light Italic',
     'Regular Italic',
     'Medium Italic',
     'Semibold Italic',
     'Bold Italic',
-    'Extra Bold Italic',
+    'Extrabold Italic',
     'Black Italic'
 ])
 
@@ -65,13 +84,27 @@ watch(props, (newValue, oldValue) => {
     updateComponent(props.component.name, props.type, newValue.value)
 })
 
-watch([fontSize, textDecoration, textTransform, textAlign,color, alignItems, fontFamily, fontStyle], () => {
+watch([fontSize, textDecoration, textTransform, textAlign, color, alignItems, fontFamily, fontStyle], () => {
+    const fontWeightValue = fontStyle.value.split(' ')[0]
+    console.log(fontWeightValue)
+    let fontWeight = 100 
+
+    if(fontWeightValue === 'Thin'){fontWeight = 100 }
+    else if(fontWeightValue === 'Extralight'){fontWeight = 200 }
+    else if(fontWeightValue === 'Light'){fontWeight = 300 }
+    else if(fontWeightValue === 'Regular'){fontWeight = 400 }
+    else if(fontWeightValue === 'Medium'){fontWeight = 500 }
+    else if(fontWeightValue === 'Semibold'){fontWeight = 600 }
+    else if(fontWeightValue === 'Bold'){fontWeight = 700 }
+    else if(fontWeightValue === 'Extrabold'){fontWeight = 800 }
+    else if(fontWeightValue === 'Black'){fontWeight = 900 }
+
     const newValue = {
         'color': color.value,
-        'font-family': props.value['font-family'],
-        'font-style': props.value[ 'font-style'],
-        'font-weight': props.value['font-weight'],
-        'font-size': props.value['font-size'],
+        'font-family': fontFamily.value,
+        'font-style': fontStyle.value.split(' ').length === 2? 'italic' : 'normal',
+        'font-weight': fontWeight,
+        'font-size': fontSize.value + 'px',
         'line-height': props.value['line-height'],
         'text-align': props.value['text-align'],
         'letter-spacing': props.value['letter-spacing'],
@@ -80,7 +113,7 @@ watch([fontSize, textDecoration, textTransform, textAlign,color, alignItems, fon
         'align-items': props.value['align-items'],
     }
     // props.value['color'] = color.value
-    updateComponent(props.component.name, props.name, newValue)
+    updateComponent(props.component.name, props.type, newValue)
 })
 </script>
 
@@ -109,7 +142,6 @@ watch([fontSize, textDecoration, textTransform, textAlign,color, alignItems, fon
                 />
             </div>
         </div>
-        {{value}}
         <div class="flex justify-between">
             <div class="form-inputs px-0 flex justify-between mb-[10px]">
                 <select 

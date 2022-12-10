@@ -67,6 +67,17 @@
     line-height: 48px;
     letter-spacing: 0.0075em;
   }
+  .text-span-three{
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .text-span-four{
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 13px;
+    letter-spacing: -0.0025em;
+  }
 }
 
 @layer components {
